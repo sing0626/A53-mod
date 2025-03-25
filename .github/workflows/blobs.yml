@@ -15,12 +15,13 @@ jobs:
         include:
           - module: "Galaxy S23 Ultra (dm1qxx)"
             path: "prebuilts/samsung/dm1qxx"
-          - module: "Galaxy A05s 5G (a05snsdxx)"
-            path: "prebuilts/samsung/a05snsdxx"
           - module: "Galaxy Z Flip 5 (b5qxxx)"
             path: "prebuilts/samsung/b5qxxx"
           - module: "Galaxy S25 (pa1qxx)"
-            path: "prebuilts/samsung/pa1qxx"   
+            path: "prebuilts/samsung/pa1qxx"
+          - module: "Galaxy Tab S9 (gts9fexx)"
+            path: "prebuilts/samsung/gts9fexx"
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

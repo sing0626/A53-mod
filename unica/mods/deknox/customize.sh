@@ -1,5 +1,5 @@
-# Galaxy A05s for even more DeKnox
-ADD_TO_WORK_DIR "a05snsdxx" "system" "."
+# Galaxy Tab S9 for even more DeKnox
+ADD_TO_WORK_DIR "gts9fexx" "system" "."
 
 # KnoxGuard
 DELETE_FROM_WORK_DIR "system" "system/priv-app/KnoxGuard"
