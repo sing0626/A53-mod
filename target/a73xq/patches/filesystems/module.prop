@@ -1,4 +1,0 @@
-id=filesystems
-name=EROFS Support
-author=utkustnr
-description=Adds EROFS support to vendor fstab.

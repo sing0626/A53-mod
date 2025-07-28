@@ -1,2 +1,0 @@
-# Disable UFFD GC
-ro.dalvik.vm.enable_uffd_gc=false
