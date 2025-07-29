@@ -1,4 +1,4 @@
-name: Build ProjectNERV
+name: Build A53 MOD
 
 on:
   workflow_dispatch:

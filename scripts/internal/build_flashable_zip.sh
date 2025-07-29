@@ -31,10 +31,10 @@ TMP_DIR="$OUT_DIR/zip"
 
 ZIP_FILE_SUFFIX=".zip"
 
-ZIP_FILE_NAME="ProjectNERV_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+ZIP_FILE_NAME="A53_MOD_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$ZIP_FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    ZIP_FILE_NAME="ProjectNERV_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+    ZIP_FILE_NAME="A53_MOD_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 done
 
 trap 'rm -rf "$TMP_DIR"' EXIT INT
@@ -444,21 +444,6 @@ PRINT_HEADER()
     fi
 
     echo    'ui_print(" ");'
-    echo    'ui_print("************************************************");'
-    echo    'ui_print(" ");'
-    echo    'ui_print("              _  __ ____ ___  _   __");'
-    echo    'ui_print("             / |/ // __// _ \| | / /");'
-    echo    'ui_print("            /    // _/ / , _/| |/ / ");'
-    echo    'ui_print("           /_/|_//___//_/|_| |___/  ");'
-    echo    'ui_print(" ");'
-    echo -n 'ui_print("'
-    for i in $(seq 1 "$SIDE_PADDING"); do
-        echo -n ' '
-    done
-    echo -n "$VERSION_INFO"
-    echo    '");'
-    echo    'ui_print(" ");'
-    echo    'ui_print("************************************************");'
     echo -n 'ui_print("'
     echo -n "One UI version: $ONEUI_VERSION"
     echo    '");'
@@ -468,7 +453,6 @@ PRINT_HEADER()
     echo -n 'ui_print("'
     echo -n "Target: $TARGET_FINGERPRINT"
     echo    '");'
-    echo    'ui_print("************************************************");'
 }
 
 SIGN_IMAGE_WITH_AVB()
