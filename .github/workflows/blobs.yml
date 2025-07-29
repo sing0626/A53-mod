@@ -15,8 +15,6 @@ jobs:
         include:
           - module: "Galaxy S23 Ultra (dm1qxx)"
             path: "prebuilts/samsung/dm1qxx"
-          - module: "Galaxy Z Flip 5 (b5qxxx)"
-            path: "prebuilts/samsung/b5qxxx"
           - module: "Galaxy S25 (pa1qxx)"
             path: "prebuilts/samsung/pa1qxx"
           - module: "Galaxy Tab S9 (gts9fexx)"
@@ -48,14 +46,12 @@ jobs:
         run: |
           sudo apt update
           DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
-            attr ccache clang ffmpeg golang \
+            jq pcre2-utils attr ccache clang ffmpeg golang \
             libbrotli-dev libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
             libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp
           sudo modprobe erofs f2fs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/unica_platform.pk8
-          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/unica_platform.x509.pem
 
       - name: Set up JDK 11
         uses: actions/setup-java@v4
@@ -66,12 +62,12 @@ jobs:
 
       - name: Build dependencies
         run: |
-          source ./buildenv.sh a52sxq
+          source ./buildenv.sh a53x
           ./scripts/build_dependencies.sh
 
       - name: Update prebuilt blobs
         run: |
-          source ./buildenv.sh a52sxq
+          source ./buildenv.sh a53x
           ./scripts/internal/update_prebuilt_blobs.sh ${{ matrix.path }}
           echo "PDA_BUILD=$(cat ./${{ matrix.path }}/.current | cut -d "/" -f 1)" >> $GITHUB_ENV
 
