@@ -19,6 +19,8 @@ jobs:
             path: "prebuilts/samsung/pa1qxx"
           - module: "Galaxy Tab S9 (gts9fexx)"
             path: "prebuilts/samsung/gts9fexx"
+          - module: "Galaxy Z Flip 5 (b5qxxx)"
+            path: "prebuilts/samsung/b5qxxx"
 
     steps:
       - name: Checkout repo
