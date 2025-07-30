@@ -28,17 +28,6 @@ VENDOR_DEBLOAT+="
 etc/dpolicy
 "
 
-# Samsung SIM Unlock
-SYSTEM_DEBLOAT+="
-system/bin/ssud
-system/etc/init/ssu.rc
-system/etc/permissions/privapp-permissions-com.samsung.ssu.xml
-system/etc/sysconfig/samsungsimunlock.xml
-system/lib64/android.security.securekeygeneration-ndk.so
-system/lib64/libssu_keystore2.so
-system/priv-app/SsuService
-"
-
 # Recovery restoration script
 VENDOR_DEBLOAT+="
 recovery-from-boot.p
@@ -55,7 +44,6 @@ app/Maps
 app/YouTube
 "
 SYSTEM_DEBLOAT+="
-system/app/AutomationTest_FB
 system/app/DRParser
 system/app/ClockPackage
 system/app/DictDiotekForSec
@@ -84,16 +72,11 @@ system/app/SamsungTTSVoice_th_TH_f00
 system/app/SamsungTTSVoice_vi_VN_f00
 system/app/SilentLog
 system/app/SmartReminder
-system/app/WebManual
 system/app/WlanTest
-system/etc/init/digitalkey_init_nfc_tss2.rc
 system/etc/init/samsung_pass_authenticator_service.rc
 system/etc/permissions/privapp-permissions-com.microsoft.skydrive.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.app.kfa.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.authfw.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.carkey.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.cidmanager.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.dkey.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.game.gamehome.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.providers.factory.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.samsungpass.xml
@@ -106,11 +89,8 @@ system/etc/permissions/privapp-permissions-com.sec.epdgtestapp.xml
 system/etc/permissions/privapp-permissions-com.sec.facatfunction.xml
 system/etc/permissions/privapp-permissions-com.sem.factoryapp.xml
 system/etc/permissions/privapp-permissions-com.wssyncmldm.xml
-system/etc/permissions/privapp-permissions-de.axelspringer.yana.zeropage.xml
 system/etc/permissions/privapp-permissions-meta.xml
-system/etc/sysconfig/digitalkey.xml
 system/etc/sysconfig/meta-hiddenapi-package-allowlist.xml
-system/etc/sysconfig/preinstalled-packages-com.samsung.android.dkey.xml
 system/etc/sysconfig/preinstalled-packages-com.samsung.android.spayfw.xml
 system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
@@ -122,7 +102,6 @@ system/priv-app/BCService
 system/priv-app/CIDManager
 system/priv-app/DeviceKeystring
 system/priv-app/DiagMonAgent94
-system/priv-app/DigitalKey
 system/priv-app/FBInstaller_NS
 system/priv-app/FBServices
 system/priv-app/FacAtFunction
@@ -130,36 +109,17 @@ system/priv-app/FactoryTestProvider
 system/priv-app/FotaAgent
 system/priv-app/GameHome
 system/priv-app/ModemServiceMode
-system/priv-app/MemorySaver_O_Refresh
 system/priv-app/OneDrive_Samsung_v3
 system/priv-app/OMCAgent5
 system/priv-app/PaymentFramework
 system/priv-app/SEMFactoryApp
-system/priv-app/SetupIndiaServicesTnC
 system/priv-app/SOAgent75
-system/priv-app/SamsungCarKeyFw
 system/priv-app/SamsungPass
 system/priv-app/SamsungMagnifier3
 system/priv-app/SamsungMessages
 system/priv-app/SmartEpdgTestApp
-system/priv-app/UltraDataSaving_O
-system/priv-app/Upday
 system/priv-app/YourPhone_P1_5
 "
-
-# eSIM
-if $SOURCE_IS_ESIM_SUPPORTED; then
-    if ! $TARGET_IS_ESIM_SUPPORTED; then
-        SYSTEM_DEBLOAT+="
-        system/etc/permissions/privapp-permissions-com.samsung.android.app.esimkeystring.xml
-        system/etc/permissions/privapp-permissions-com.samsung.euicc.xml
-        system/etc/sysconfig/preinstalled-packages-com.samsung.android.app.esimkeystring.xml
-        system/etc/sysconfig/preinstalled-packages-com.samsung.euicc.xml
-        system/priv-app/EsimKeyString
-        system/priv-app/EuiccService
-        "
-    fi
-fi
 
 # fabric_crypto
 if [[ "$TARGET_API_LEVEL" -lt 34 ]]; then
