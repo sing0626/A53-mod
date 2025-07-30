@@ -139,6 +139,11 @@ if [[ "$(GET_FP_SENSOR_TYPE "$SOURCE_FP_SENSOR_CONFIG")" != "$(GET_FP_SENSOR_TYP
     LOG_STEP_OUT
 fi
 
+if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
+    LOG_STEP_IN "- Applying Ultrasonic FOD Animation Patch"
+    APPLY_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/BiometricSetting.apk/0002-Always-use-ultrasonic-FOD-animation.patch"
+fi
+
 #if [[ "$TARGET_API_LEVEL" -lt 34 ]]; then
 #    echo "Applying Face HIDL patches"
 #    APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/face/services.jar/0001-Fallback-to-Face-HIDL-2.0.patch"
