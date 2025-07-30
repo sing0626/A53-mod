@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2025 Fede2782
+# Copyright (C) 2025 Ksawlii
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,20 +19,6 @@
 # - Add entries inside the specific partition containing that file (<PARTITION>_DEBLOAT+="")
 # - DO NOT add the partition name at the start of any entry (eg. "/system/dpolicy_system")
 # - DO NOT add a slash at the start of any entry (eg. "/dpolicy_system")
-
-# system_ext clean-up
-SYSTEM_EXT_DEBLOAT+="
-framework/org.carconnectivity.android.digitalkey.rangingintent.jar
-framework/org.carconnectivity.android.digitalkey.secureelement.jar
-framework/oat/arm/org.carconnectivity.android.digitalkey.rangingintent.odex
-framework/oat/arm/org.carconnectivity.android.digitalkey.rangingintent.vdex
-framework/oat/arm/org.carconnectivity.android.digitalkey.secureelement.odex
-framework/oat/arm/org.carconnectivity.android.digitalkey.secureelement.vdex
-framework/oat/arm64/org.carconnectivity.android.digitalkey.rangingintent.odex
-framework/oat/arm64/org.carconnectivity.android.digitalkey.rangingintent.vdex
-framework/oat/arm64/org.carconnectivity.android.digitalkey.secureelement.odex
-framework/oat/arm64/org.carconnectivity.android.digitalkey.secureelement.vdex
-"
 
 # Camera SDK
 SYSTEM_DEBLOAT+="
