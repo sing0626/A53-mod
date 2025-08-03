@@ -170,8 +170,8 @@ PREPARE_SCRIPT()
 
 PRINT_USAGE()
 {
-    echo "Usage: apktool d[ecode]/b[uild] [options] <partition> <file>" >&2
-    echo " -f, --force : Force delete output directory" >&2
+    LOG "Usage: apktool d[ecode]/b[uild] [options] <partition> <file>" >&2
+    LOG " -f, --force : Force delete output directory" >&2
 }
 # ]
 

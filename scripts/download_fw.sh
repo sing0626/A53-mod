@@ -79,10 +79,10 @@ PREPARE_SCRIPT()
 
 PRINT_USAGE()
 {
-    echo "Usage: download_fw [options] <firmware>" >&2
-    echo " --ignore-source : Skip parsing source firmware flags" >&2
-    echo " --ignore-target : Skip parsing target firmware flags" >&2
-    echo " -f, --force : Force firmware download" >&2
+    LOG "Usage: download_fw [options] <firmware>" >&2
+    LOG " --ignore-source : Skip parsing source firmware flags" >&2
+    LOG " --ignore-target : Skip parsing target firmware flags" >&2
+    LOG " -f, --force : Force firmware download" >&2
 }
 
 VERIFY_ODIN_PACKAGES()

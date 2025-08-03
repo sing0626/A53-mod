@@ -231,10 +231,10 @@ PREPARE_SCRIPT()
 
 PRINT_USAGE()
 {
-    echo "Usage: extract_fw [options] <firmware>" >&2
-    echo " --ignore-source : Skip parsing source firmware flags" >&2
-    echo " --ignore-target : Skip parsing target firmware flags" >&2
-    echo " -f, --force : Force firmware extract" >&2
+    LOG "Usage: extract_fw [options] <firmware>" >&2
+    LOG " --ignore-source : Skip parsing source firmware flags" >&2
+    LOG " --ignore-target : Skip parsing target firmware flags" >&2
+    LOG " -f, --force : Force firmware extract" >&2
 }
 
 STORE_KERNEL_IMAGE_METADATA()
@@ -243,7 +243,6 @@ STORE_KERNEL_IMAGE_METADATA()
 
     if [ ! -f "$FILE" ]; then
         LOGE "File not found: ${TAR//$SRC_DIR\//}"
-        exit 1
     fi
 
     if avbtool info_image --image "$FILE" &> /dev/null; then

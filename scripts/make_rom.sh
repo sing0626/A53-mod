@@ -72,9 +72,9 @@ PRINT_BUILD_OUTCOME()
 
 PRINT_USAGE()
 {
-    echo "Usage: make_rom [options]" >&2
-    echo " -f, --force : Force ROM build" >&2
-    echo " --no-rom-zip : Do not build ROM zip" >&2
+    LOG "Usage: make_rom [options]" >&2
+    LOG " -f, --force : Force ROM build" >&2
+    LOG " --no-rom-zip : Do not build ROM zip" >&2
 }
 # ]
 

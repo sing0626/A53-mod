@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2023 Salvo Giangreco
+# Copyright (C) 2025 Salvo Giangreco
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@ source "$SRC_DIR/scripts/utils/log_utils.sh"
 
 PRINT_USAGE()
 {
-    echo "Usage: cleanup <type> (<type>...)" >&2
-    echo " - all ($OUT_DIR)" >&2
-    echo " - kernel ($KERNEL_TMP_DIR)" >&2
-    echo " - odin ($ODIN_DIR)" >&2
-    echo " - fw ($FW_DIR)" >&2
-    echo " - work_dir ($WORK_DIR)" >&2
-    echo " - logs ($OUT_DIR/**.log)" >&2
-    echo " - tools ($TOOLS_DIR)" >&2
+    LOG "Usage: cleanup <type> (<type>...)" >&2
+    LOG " - all ($OUT_DIR)" >&2
+    LOG " - kernel ($KERNEL_TMP_DIR)" >&2
+    LOG " - odin ($ODIN_DIR)" >&2
+    LOG " - fw ($FW_DIR)" >&2
+    LOG " - work_dir ($WORK_DIR)" >&2
+    LOG " - logs ($OUT_DIR/**.log)" >&2
+    LOG " - tools ($TOOLS_DIR)" >&2
 }
 # ]
 

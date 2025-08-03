@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2023 Salvo Giangreco
+# Copyright (C) 2025 Salvo Giangreco
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 
 set -Ee
 
+source "$SRC_DIR/scripts/utils/log_utils.sh"
+
 # [
 GET_LATEST_FIRMWARE()
 {
@@ -29,13 +31,12 @@ GET_LATEST_FIRMWARE()
 #]
 
 if [ "$#" != 1 ]; then
-    echo "Usage: update_prebuilt_blobs <path>"
+    LOG "Usage: update_prebuilt_blobs <path>"
     exit 1
 fi
 
 if [ ! -d "$SRC_DIR/$1" ]; then
-    echo "Folder not found: $SRC_DIR/$1"
-    exit 1
+    LOGE "Folder not found: \"$SRC_DIR\"/\"$1\""
 fi
 
 MODULE="$SRC_DIR/$1"
@@ -76,8 +77,7 @@ case "$1" in
         FIRMWARE="SM-F731B/EUX/350929876172137"
         ;;
     *)
-        echo "Firmware not set for path $1"
-        exit 1
+        LOGE "Firmware not set for path $1"
         ;;
 esac
 
@@ -86,11 +86,11 @@ REGION=$(echo -n "$FIRMWARE" | cut -d "/" -f 2)
 
 [ -z "$(GET_LATEST_FIRMWARE)" ] && exit 1
 if [[ "$(GET_LATEST_FIRMWARE)" == "$(cat "$MODULE/.current")" ]]; then
-    echo "Nothing to do."
+    LOG "- Nothing to do."
     exit 0
 fi
 
-echo -e "Updating $MODULE blobs\n"
+LOG_STEP_IN "- Updating \"$MODULE\" blobs"
 
 export SOURCE_FIRMWARE="$FIRMWARE"
 export TARGET_FIRMWARE="$FIRMWARE"
@@ -111,10 +111,10 @@ for i in $BLOBS; do
         rm "$OUT."*
         split -d -b 52428800 "$FW_DIR/${MODEL}_${REGION}/$i" "$OUT."
     else
-        cp -a "$FW_DIR/${MODEL}_${REGION}/$i" "$OUT"
+        cp -ra "$FW_DIR/${MODEL}_${REGION}/$i" "$OUT"
     fi
 done
 
-cp -a "$FW_DIR/${MODEL}_${REGION}/.extracted" "$MODULE/.current"
+cp -ra "$FW_DIR/${MODEL}_${REGION}/.extracted" "$MODULE/.current"
 
 exit 0
