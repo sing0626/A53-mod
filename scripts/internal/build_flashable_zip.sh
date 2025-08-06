@@ -460,14 +460,20 @@ mkdir -p "$TMP_DIR/META-INF/com/google/android"
 cp -a "$SRC_DIR/prebuilts/bootable/deprecated-ota/updater" "$TMP_DIR/META-INF/com/google/android/update-binary"
 
 while IFS= read -r f; do
-    PARTITION=$(basename "$f")
-    IS_VALID_PARTITION_NAME "$PARTITION" || continue
+        PARTITION=$(basename "$f")
+        IS_VALID_PARTITION_NAME "$PARTITION" || continue
 
-    "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM" \
-        -o "$TMP_DIR/$PARTITION.img" -m -S \
-        "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
+    (
+        LOG "- Building $PARTITION"
+        "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM" \
+            -o "$TMP_DIR/$PARTITION.img" -m -S \
+            "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
+    ) &
 done < <(find "$WORK_DIR" -maxdepth 1 -type d)
 LOG_STEP_OUT
+
+# shellcheck disable=SC2046
+wait $(jobs -p) || exit 1
 
 LOG "- Building unsparse_super_empty.img"
 BUILD_SUPER_EMPTY
@@ -476,18 +482,23 @@ LOG "- Generating dynamic_partitions_op_list"
 GENERATE_OP_LIST
 
 while IFS= read -r f; do
-    PARTITION="$(basename "$f" | sed "s/.img//g")"
-    IS_VALID_PARTITION_NAME "$PARTITION" || continue
+        PARTITION="$(basename "$f" | sed "s/.img//g")"
+        IS_VALID_PARTITION_NAME "$PARTITION" || continue
 
-    LOG "- Converting $PARTITION.img to $PARTITION.new.dat"
-    EVAL "img2sdat -o \"$TMP_DIR\" -B \"$TMP_DIR/$PARTITION.map\" \"$f\"" || exit 1
-    rm -f "$f" "$TMP_DIR/$PARTITION.map"
+    (
+        LOG "- Converting $PARTITION.img to $PARTITION.new.dat"
+        EVAL "img2sdat -o \"$TMP_DIR\" -B \"$TMP_DIR/$PARTITION.map\" \"$f\"" || exit 1
+        rm -f "$f" "$TMP_DIR/$PARTITION.map"
 
-    LOG "- Compressing $PARTITION.new.dat"
-    # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
-    EVAL "brotli --quality=6 --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
-    rm -f "$TMP_DIR/$PARTITION.new.dat"
+        LOG "- Compressing $PARTITION.new.dat"
+        # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
+        EVAL "brotli --quality=6 --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
+        rm -f "$TMP_DIR/$PARTITION.new.dat"
+    ) &
 done < <(find "$TMP_DIR" -maxdepth 1 -type f -name "*.img")
+
+# shellcheck disable=SC2046
+wait $(jobs -p) || exit 1
 
 if [ -d "$WORK_DIR/kernel" ]; then
     while IFS= read -r f; do
