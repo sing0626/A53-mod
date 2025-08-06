@@ -19,6 +19,8 @@ jobs:
             path: "prebuilts/samsung/pa1qxx"
           - module: "Galaxy Z Flip 5 (b5qxxx)"
             path: "prebuilts/samsung/b5qxxx"
+          - module: "Galaxy S24 (e1qzcx)"
+            path: "prebuilts/samsung/e1qzcx"
 
     steps:
       - name: Checkout repo

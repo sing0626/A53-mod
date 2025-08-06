@@ -76,6 +76,9 @@ case "$1" in
     "prebuilts/samsung/b5qxxx")
         FIRMWARE="SM-F731B/EUX/350929876172137"
         ;;
+    "prebuilts/samsung/e1qzcx")
+        FIRMWARE="SM-S9210/CHC/356724910402671"
+        ;;
     *)
         LOGE "Firmware not set for path $1"
         ;;
