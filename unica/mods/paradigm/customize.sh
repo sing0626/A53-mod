@@ -14,49 +14,58 @@ LOG_STEP_OUT
 
 LOG_STEP_IN "- Adding Galaxy AI features"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_DISABLE_NATIVE_AI" --delete
-# Now Brief
+
+LOG_STEP_IN "- Adding Now Brief"
 ADD_TO_WORK_DIR "pa1qxx" "system" "system/priv-app/SamsungSmartSuggestions/SamsungSmartSuggestions.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "pa1qxx" "system" \
     "system/etc/default-permissions/default-permissions-com.samsung.android.app.moments.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "pa1qxx" "system" "system/priv-app/Moments/Moments.apk" 0 0 644 "u:object_r:system_file:s0"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION" "20251"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_SUPPORT_PERSONALIZED_DATA_CORE" "TRUE"
-# Photo Editor
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Photo Editor"
 DELETE_FROM_WORK_DIR "system" "system/priv-app/PhotoEditor_Full"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/PhotoEditorAI_Full/PhotoEditorAI_Full.apk" 0 0 644 "u:object_r:system_file:s0"
-# Video Editor
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Video Editor"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VideoEditorLite_Dream_N/VideoEditorLite_Dream_N.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VideoTrimmer/VideoTrimmer.apk" 0 0 644 "u:object_r:system_file:s0"
-# Bixby Interpeter
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Bixby Interpeter"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/BixbyInterpreter/BixbyInterpreter.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.app.interpreter.xml" 0 0 644 "u:object_r:system_file:s0"
-# Visual Cloud Core
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Visual Cloud Core"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VisualCloudCore/VisualCloudCore.apk" 0 0 644 "u:object_r:system_file:s0"
-# SketchBook
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding SketchBook"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/SketchBook/SketchBook.apk" 0 0 644 "u:object_r:system_file:s0"
-# Circle to Search
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Circle to Search"
 SET_PROP "product" "ro.com.google.cdb.spa1" "bsxasm1"
 ADD_TO_WORK_DIR "dm1qxx" "product" "etc/sysconfig/google_searcle.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "product" "etc/sysconfig/sysconfig_contextual_search.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "product" "overlay/DefaultContextualSearchOverlay.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "product" "overlay/GmsConfigOverlaySearchSelector.apk" 0 0 644 "u:object_r:system_file:s0"
-# AI Wallpaper Generator
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding AI Wallpaper Generator"
 ADD_TO_WORK_DIR "dm1qxx" "product" "priv-app/AiWallpaper/AiWallpaper.apk" 0 0 644 "u:object_r:system_file:s0"
-# Camera Sharing
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding Camera Sharing"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/HWResourceShare/HWResourceShare.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.hwresourceshare.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/etc/sysconfig/preinstalled-packages-com.samsung.android.hwresourceshare.xml" 0 0 644 "u:object_r:system_file:s0"
-# Storage Share
-#ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/StorageShare/StorageShare.apk" 0 0 644 "u:object_r:system_file:s0"
-#ADD_TO_WORK_DIR "dm1qxx" "system" \
-#    "system/etc/default-permissions/default-permissions-com.samsung.android.hwresourceshare.storage.xml" 0 0 644 "u:object_r:system_file:s0"
-#ADD_TO_WORK_DIR "dm1qxx" "system" \
-#    "system/etc/permissions/privapp-permissions-com.samsung.android.hwresourceshare.storage.xml" 0 0 644 "u:object_r:system_file:s0"
-#ADD_TO_WORK_DIR "dm1qxx" "system" \
-#    "system/etc/sysconfig/preinstalled-packages-com.samsung.android.hwresourceshare.storage.xml" 0 0 644 "u:object_r:system_file:s0"
+LOG_STEP_OUT
+LOG_STEP_OUT
 
-# Use S24 FE Wallpapers
-LOG_STEP_IN "- Replace wallpaper-res"
-ADD_TO_WORK_DIR "r12sxxx" "system" \
-    "system/priv-app/wallpaper-res/wallpaper-res.apk" 0 0 644 "u:object_r:system_file:s0"
+LOG_STEP_IN "- Adding r12sxxx (S24 FE) Wallpapers"
+ADD_TO_WORK_DIR "r12sxxx" "system" "system/priv-app/wallpaper-res/wallpaper-res.apk" 0 0 644 "u:object_r:system_file:s0"
 LOG_STEP_OUT
