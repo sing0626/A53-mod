@@ -44,6 +44,7 @@ app/Maps
 app/YouTube
 "
 SYSTEM_DEBLOAT+="
+system/app/BixbyWakeup
 system/app/DRParser
 system/app/ClockPackage
 system/app/DictDiotekForSec
@@ -99,6 +100,9 @@ system/lib64/librildump_jni.so
 system/preload
 system/priv-app/AuthFramework
 system/priv-app/BCService
+system/priv-app/Bixby
+system/priv-app/BixbyInterpreter
+system/priv-app/BixbyVisionFramework3.5
 system/priv-app/CIDManager
 system/priv-app/DeviceKeystring
 system/priv-app/DiagMonAgent94
