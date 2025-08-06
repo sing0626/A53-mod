@@ -459,7 +459,6 @@ PRINT_HEADER()
 mkdir -p "$TMP_DIR/META-INF/com/google/android"
 cp -a "$SRC_DIR/prebuilts/bootable/deprecated-ota/updater" "$TMP_DIR/META-INF/com/google/android/update-binary"
 
-LOG_STEP_IN "- Building OS partitions"
 while IFS= read -r f; do
     PARTITION=$(basename "$f")
     IS_VALID_PARTITION_NAME "$PARTITION" || continue
