@@ -1,7 +1,7 @@
 From f0c65405729337b036c6cf8a75f48f94477a2035 Mon Sep 17 00:00:00 2001
 From: Salvo Giangreco <giangrecosalvo9@gmail.com>
 Date: Thu, 5 Jun 2025 00:07:16 +0300
-Subject: [PATCH 1/2] Introduce SamsungPropsHooks
+Subject: [PATCH] Introduce SamsungPropsHooks
 
 Signed-off-by: utkustnr <utkuustuner@proton.me>
 ---
