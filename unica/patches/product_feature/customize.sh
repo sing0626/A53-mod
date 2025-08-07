@@ -142,6 +142,7 @@ fi
 if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
     LOG_STEP_IN "- Applying Ultrasonic FOD Animation Patch"
     APPLY_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/BiometricSetting.apk/0002-Always-use-ultrasonic-FOD-animation.patch"
+    LOG_STEP_OUT
 fi
 
 #if [[ "$TARGET_API_LEVEL" -lt 34 ]]; then
