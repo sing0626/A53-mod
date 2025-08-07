@@ -3,11 +3,18 @@ BUILD_KERNEL()
     local PARENT="$(pwd)"
     cd "$KERNEL_TMP_DIR/floppy"
 
-    ./do_build.sh ku
+    EVAL "./do_build.sh ku"
 
-    echo "Building dtbo image"
+    cd "$PARENT"
+}
+
+BUILD_DTBO_IMAGE()
+{
+    local PARENT="$(pwd)"
+    cd "$KERNEL_TMP_DIR/floppy"
+
     mkdtboimg cfg_create \
-        "kernel_build/dtbo.img" \
+        "kernel_build/images/dtbo.img" \
         "$SRC_DIR/target/a53x/patches/floppy/configs/a53x.cfg" \
         -d "out/arch/arm64/boot/dts/exynos/samsung/a53x"
 
@@ -21,24 +28,23 @@ SAFE_PULL_CHANGES()
     local PARENT="$(pwd)"
     cd "$KERNEL_TMP_DIR/floppy"
 
-    git fetch origin
+    EVAL "git fetch origin"
 
     LOCAL="$(git rev-parse @)"
     REMOTE="$(git rev-parse origin)"
     BASE="$(git merge-base @ origin)"
 
     # Now we have three cases that we need to take care of.
-    if [ "$LOCAL" = "$REMOTE" ]; then
-        echo "Local branch is up-to-date with remote."
-    elif [ "$LOCAL" = "$BASE" ]; then
-        echo "Fast-forward possible. Pulling..."
-        git pull --ff-only
-    elif [ "$REMOTE" = "$BASE" ]; then
-        echo "Local branch is ahead of remote. Not doing anything."
+    if [[ "$LOCAL" == "$REMOTE" ]]; then
+        LOG "- Local branch is up-to-date with remote"
+    elif [[ "$LOCAL" == "$BASE" ]]; then
+        LOG "- Fast-forward possible. Pulling"
+        EVAL "git pull --ff-only"
+    elif [[ "$REMOTE" == "$BASE" ]]; then
+        LOG "- Local branch is ahead of remote. Not doing anything"
     else
-        echo "ERR: Remote history has diverged (possible force-push)."
 	      cd "$PARENT"
-	      return 1
+		    ABORT "Could not pull latest Kernel changes. If you hold local changes, please rebase to the new base. If not, cleaning the kernel_tmp_dir should suffice."
     fi
 
     cd "$PARENT"
@@ -49,30 +55,26 @@ REPLACE_KERNEL_IMAGES()
     local KERNEL_TMP_DIR="$KERNEL_TMP_DIR-s5e8825"
     local FLOPPY_REPO="https://github.com/FlopKernel-Series/flop_s5e8825_kernel"
 
-    [ ! -d "$KERNEL_TMP_DIR" ] && mkdir -p "$KERNEL_TMP_DIR"
-
-    if [ -d "$KERNEL_TMP_DIR/floppy/.git" ]; then
-        echo "Existing git repo found, trying to pull latest changes."
-        if ! SAFE_PULL_CHANGES; then
-		    echo "ERR: Could not pull latest Kernel changes."
-		    echo "If you hold local changes, please rebase to the new base."
-		    echo "If not, cleaning the kernel_tmp_dir should suffice."
-		    return 1
-	    fi
+    if [[ -d "$KERNEL_TMP_DIR/floppy/.git" ]]; then
+        LOG "- Existing git repo found, trying to pull latest changes"
+        SAFE_PULL_CHANGES
     else
-        echo "Cloning FloppyKernel"
-        [ -d "$KERNEL_TMP_DIR/floppy" ] && rm -rf "$KERNEL_TMP_DIR/floppy"
-        git clone "$FLOPPY_REPO" --single-branch "$KERNEL_TMP_DIR/floppy"
+        LOG "- Cloning FloppyKernel"
+        [[ -d "$KERNEL_TMP_DIR/floppy" ]] && rm -rf "$KERNEL_TMP_DIR/floppy"
+        git clone -q "$FLOPPY_REPO" --single-branch "$KERNEL_TMP_DIR/floppy"
     fi
 
-    echo "Running the kernel build script."
+    LOG "- Running the kernel build script"
     BUILD_KERNEL
+
+    LOG "- Building dtbo image"
+    BUILD_DTBO_IMAGE
 
     # Move the files to the work dir
     KERNEL_IMAGES=(dtbo.img boot_oneui.img vendor_boot.img)
     for b in "${KERNEL_IMAGES[@]}"; do
-        [ -f "$WORK_DIR/kernel/$b" ] && rm -f "$WORK_DIR/kernel/$b"
-        mv -f "$KERNEL_TMP_DIR/floppy/kernel_build/$b" "$WORK_DIR/kernel"
+        [[ -f "$WORK_DIR/kernel/$b" ]] && rm -f "$WORK_DIR/kernel/$b"
+        cp -fa "$KERNEL_TMP_DIR/floppy/kernel_build/images/$b" "$WORK_DIR/kernel"
     done
     mv -f "$WORK_DIR/kernel/boot_oneui.img" "$WORK_DIR/kernel/boot.img"
 }
@@ -83,16 +85,16 @@ ADD_KERNELSU_NEXT_MANAGER()
     # https://github.com/tiann/KernelSU/issues/886
     local APK_PATH="system/preload/KernelSU-Next/com.rifsxd.ksunext-mesa==/base.apk"
 
-    echo "Adding KernelSU-Next.apk to preload apps"
+    LOG "- Adding KernelSU-Next.apk to preload apps"
     mkdir -p "$WORK_DIR/system/$(dirname "$APK_PATH")"
-    curl -L -s -o "$WORK_DIR/system/$APK_PATH" -z "$WORK_DIR/system/$APK_PATH" "$KERNELSU_MANAGER_APK"
+    DOWNLOAD_FILE "$KERNELSU_MANAGER_APK" "$WORK_DIR/system/$APK_PATH"
 
     sed -i "/system\/preload/d" "$WORK_DIR/configs/fs_config-system" \
         && sed -i "/system\/preload/d" "$WORK_DIR/configs/file_context-system"
     while read -r i; do
         FILE="$(echo -n "$i"| sed "s.$WORK_DIR/system/..")"
-        [ -d "$i" ] && echo "$FILE 0 0 755 capabilities=0x0" >> "$WORK_DIR/configs/fs_config-system"
-        [ -f "$i" ] && echo "$FILE 0 0 644 capabilities=0x0" >> "$WORK_DIR/configs/fs_config-system"
+        [[ -d "$i" ]] && echo "$FILE 0 0 755 capabilities=0x0" >> "$WORK_DIR/configs/fs_config-system"
+        [[ -f "$i" ]] && echo "$FILE 0 0 644 capabilities=0x0" >> "$WORK_DIR/configs/fs_config-system"
         FILE="$(echo -n "$FILE" | sed 's/\./\\./g')"
         echo "/$FILE u:object_r:system_file:s0" >> "$WORK_DIR/configs/file_context-system"
     done <<< "$(find "$WORK_DIR/system/system/preload")"
@@ -104,7 +106,11 @@ ADD_KERNELSU_NEXT_MANAGER()
     done <<< "$(find "$WORK_DIR/system/system/preload" -name "*.apk" | sort)"
 }
 
+ADD_KERNELSU_NEXT_MANAGER &
 REPLACE_KERNEL_IMAGES
-ADD_KERNELSU_NEXT_MANAGER
+
+# shellcheck disable=SC2046
+wait $(jobs -p) || exit 1
+
 rm -rf "$TMP_DIR"
 
