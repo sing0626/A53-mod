@@ -4,7 +4,5 @@
 /system/priv-app/Moments/Moments\.apk u:object_r:system_file:s0
 /system/priv-app/PhotoEditorAI_Full u:object_r:system_file:s0
 /system/priv-app/PhotoEditorAI_Full/PhotoEditorAI_Full\.apk u:object_r:system_file:s0
-/system/priv-app/BixbyInterpreter u:object_r:system_file:s0
-/system/priv-app/BixbyInterpreter/BixbyInterpreter\.apk u:object_r:system_file:s0
 /system/priv-app/HWResourceShare u:object_r:system_file:s0
 /system/priv-app/HWResourceShare/HWResourceShare\.apk u:object_r:system_file:s0

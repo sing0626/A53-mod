@@ -101,7 +101,6 @@ system/preload
 system/priv-app/AuthFramework
 system/priv-app/BCService
 system/priv-app/Bixby
-system/priv-app/BixbyInterpreter
 system/priv-app/BixbyVisionFramework3.5
 system/priv-app/CIDManager
 system/priv-app/DeviceKeystring

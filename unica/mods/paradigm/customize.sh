@@ -34,11 +34,6 @@ ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VideoEditorLite_Dream_N/VideoEdito
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VideoTrimmer/VideoTrimmer.apk" 0 0 644 "u:object_r:system_file:s0"
 LOG_STEP_OUT
 
-LOG_STEP_IN "- Adding Bixby Interpeter"
-ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/BixbyInterpreter/BixbyInterpreter.apk" 0 0 644 "u:object_r:system_file:s0"
-ADD_TO_WORK_DIR "dm1qxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.app.interpreter.xml" 0 0 644 "u:object_r:system_file:s0"
-LOG_STEP_OUT
-
 LOG_STEP_IN "- Adding Visual Cloud Core"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/app/VisualCloudCore/VisualCloudCore.apk" 0 0 644 "u:object_r:system_file:s0"
 LOG_STEP_OUT
