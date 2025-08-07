@@ -1,7 +1,5 @@
 /system/app/SketchBook u:object_r:system_file:s0
 /system/app/SketchBook/SketchBook\.apk u:object_r:system_file:s0
-/system/priv-app/Moments u:object_r:system_file:s0
-/system/priv-app/Moments/Moments\.apk u:object_r:system_file:s0
 /system/priv-app/PhotoEditorAI_Full u:object_r:system_file:s0
 /system/priv-app/PhotoEditorAI_Full/PhotoEditorAI_Full\.apk u:object_r:system_file:s0
 /system/priv-app/HWResourceShare u:object_r:system_file:s0

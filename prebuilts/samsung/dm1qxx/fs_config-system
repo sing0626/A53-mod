@@ -1,7 +1,5 @@
 system/app/SketchBook 0 0 755 capabilities=0x0
 system/app/SketchBook/SketchBook.apk 0 0 644 capabilities=0x0
-system/priv-app/Moments 0 0 755 capabilities=0x0
-system/priv-app/Moments/Moments.apk 0 0 644 capabilities=0x0
 system/priv-app/PhotoEditorAI_Full 0 0 755 capabilities=0x0
 system/priv-app/PhotoEditorAI_Full/PhotoEditorAI_Full.apk 0 0 644 capabilities=0x0
 system/priv-app/HWResourceShare 0 0 755 capabilities=0x0
