@@ -9,7 +9,7 @@ on early-init && property:ro.boot.em.model=SM-A5360
     mount none /vendor/firmware/SM-A5360/vts.bin /vendor/firmware/vts.bin bind
     mount none /vendor/firmware/SM-A5360/calliope_sram.bin /vendor/firmware/calliope_sram.bin bind
     # TEEgris
-    mount none /vendor/tee/SM-A5360 /vendor/tee bind
+    mount none /vendor/tee_SM-A5360 /vendor/tee bind
 
 # a53xnaxx (eur_open)
 on early-init && property:ro.boot.em.model=SM-A536B
@@ -22,7 +22,7 @@ on early-init && property:ro.boot.em.model=SM-A536B
     mount none /vendor/firmware/SM-A536B/vts.bin /vendor/firmware/vts.bin bind
     mount none /vendor/firmware/SM-A536B/calliope_sram.bin /vendor/firmware/calliope_sram.bin bind
     # TEEgris
-    mount none /vendor/tee/SM-A536B /vendor/tee bind
+    mount none /vendor/tee_SM-A536B /vendor/tee bind
 
 # a53xnsxx (cis_open)
 on early-init && property:ro.boot.em.model=SM-A536E
@@ -35,7 +35,7 @@ on early-init && property:ro.boot.em.model=SM-A536E
     mount none /vendor/firmware/SM-A536E/os.checked.bin /vendor/firmware/os.checked.bin bind
     mount none /vendor/firmware/SM-A536E/vts.bin /vendor/firmware/vts.bin bind
     # TEEgris
-    mount none /vendor/tee/SM-A536E /vendor/tee bind
+    mount none /vendor/tee_SM-A536E /vendor/tee bind
 
 # Restart audioserver on post-fs-data
 on post-fs-data
