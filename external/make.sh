@@ -134,6 +134,7 @@ EROFS_UTILS=true
 IMG2SDAT=true
 MAGISKBOOT=true
 SAMLOADER=true
+SIGNAPK=true
 
 ANDROID_TOOLS_EXEC=(
     "adb" "append2simg" "avbtool" "e2fsdroid"
@@ -164,6 +165,10 @@ SAMLOADER_EXEC=(
     "../venv/bin/samloader"
 )
 CHECK_TOOLS "${SAMLOADER_EXEC[@]}" && SAMLOADER=false
+SIGNAPK_EXEC=(
+    "signapk" "signapk.jar"
+)
+CHECK_TOOLS "${SIGNAPK_EXEC[@]}" && SIGNAPK=false
 
 if [[ "$1" == "--check-tools" ]]; then
     if ! $ANDROID_TOOLS && \
@@ -171,7 +176,8 @@ if [[ "$1" == "--check-tools" ]]; then
             ! $EROFS_UTILS && \
             ! $IMG2SDAT && \
             ! $MAGISKBOOT && \
-            ! $SAMLOADER; then
+            ! $SAMLOADER && \
+            ! $SIGNAPK; then
         exit 0
     else
         exit 1
@@ -260,6 +266,15 @@ if $SAMLOADER; then
     )
 
     BUILD "samloader" "$SRC_DIR/external/samloader" "${SAMLOADER_CMDS[@]}"
+fi
+if $SIGNAPK; then
+    SIGNAPK_CMDS=(
+        "./gradlew build"
+        "cp -a \"scripts/linux/signapk\" \"$TOOLS_DIR/bin\""
+        "cp -a \"signapk/build/libs/signapk-all.jar\" \"$TOOLS_DIR/bin/signapk.jar\""
+    )
+
+    BUILD "signapk" "$SRC_DIR/external/signapk" "${SIGNAPK_CMDS[@]}"
 fi
 
 exit 0
