@@ -11,3 +11,5 @@
 /system/priv-app/SmartManagerCN/SmartManagerCN\.apk u:object_r:system_file:s0
 /system/priv-app/SpriteWallpaper u:object_r:system_file:s0
 /system/priv-app/SpriteWallpaper/SpriteWallpaper\.apk u:object_r:system_file:s0
+/system/priv-app/AODService_v80 u:object_r:system_file:s0
+/system/priv-app/AODService_v80/AODService_v80\.apk u:object_r:system_file:s0

@@ -63,6 +63,7 @@ LOG_STEP_OUT
 LOG_STEP_IN "- Adding AOD Wallpaper"
 ADD_TO_WORK_DIR "e1qzcx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.wallpaper.live.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "e1qzcx" "system" "system/priv-app/SpriteWallpaper" 0 0 755 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "e1qzcx" "system" "system/priv-app/AODService_v80" 0 0 755 "u:object_r:system_file:s0"
 LOG_STEP_OUT
 
 LOG_STEP_OUT
