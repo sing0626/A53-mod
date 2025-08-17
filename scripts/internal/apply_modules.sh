@@ -88,20 +88,6 @@ APPLY_SMALI_PATCHES()
         local FILE="$TARGET"
         [[ "$PARTITION" != "system" ]] && FILE="$(cut -d "/" -f 2- -s <<< "$FILE")"
 
-        # TODO remove
-        if [[ "$p" == *"0000-"* ]]; then
-            if $ROM_IS_OFFICIAL; then
-                [[ "$p" == *"AOSP"* ]] && continue
-            else
-                [[ "$p" == *"UNICA"* ]] && continue
-            fi
-        fi
-        if [[ "$patch" == *".essi."* ]] && [[ "$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
-            continue
-        elif [[ "$patch" == *".qssi."* ]] && [[ "$TARGET_SINGLE_SYSTEM_IMAGE" == "essi" ]]; then
-            continue
-        fi
-
         APPLY_PATCH "$PARTITION" "$FILE" "$p"
     done < <(find "$PATCHES_PATH/$TARGET" -type f -name "*.patch" | sort -n)
 
