@@ -23,4 +23,4 @@ prebuilts/*/*/*/** binary
 unica/mods/rezetprop/system/bin/rezetprop binary
 
 # Device-specific prebuilt blobs
-target/a53x/patches/vendor/vendor/** binary
+target/*/patches/*/vendor/** binary
