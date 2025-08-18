@@ -2,6 +2,9 @@ name: Build A53 MOD
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'fifteen'
 
 jobs:
   build:
