@@ -44,3 +44,8 @@ LOG_STEP_IN "- Applying Crok's RAM Managment Fix"
 } >> "$WORK_DIR/system/system/etc/init/ram_mgmt_fix.rc"
 SET_METADATA "system" "system/etc/init/ram_mgmt_fix.rc" 0 0 644 "u:object_r:system_file:s0"
 LOG_STEP_OUT
+
+LOG_STEP_IN "- Fixing Edge lighting corner radius"
+MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
+SET_PROP "system" "ro.factory.model" "$MODEL"
+LOG_STEP_OUT
