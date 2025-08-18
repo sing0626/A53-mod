@@ -31,10 +31,10 @@ TMP_DIR="$OUT_DIR/zip"
 
 ZIP_FILE_SUFFIX=".zip"
 
-ZIP_FILE_NAME="A53_MOD_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+ZIP_FILE_NAME="A53_MOD_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$ZIP_FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    ZIP_FILE_NAME="A53_MOD_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+    ZIP_FILE_NAME="A53_MOD_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 done
 
 trap 'rm -rf "$TMP_DIR"' EXIT INT
@@ -88,7 +88,6 @@ GENERATE_BUILD_INFO()
 
     {
         echo "device=$TARGET_CODENAME"
-        echo "version=$ROM_VERSION"
         echo "timestamp=$ROM_BUILD_TIMESTAMP"
         echo "security_patch_version=$(GET_PROP "system" "ro.build.version.security_patch")"
     } > "$BUILD_INFO_FILE"
@@ -428,7 +427,7 @@ PRINT_HEADER()
     local MINOR
     local PATCH
 
-    VERSION_INFO="$ROM_VERSION for $TARGET_NAME"
+    VERSION_INFO="A53 MOD for $TARGET_NAME"
     SIDE_PADDING="$(bc -l <<< "scale=0; (49 - ${#VERSION_INFO}) / 2")"
     [ "$SIDE_PADDING" -lt 1 ] && SIDE_PADDING=1
 
