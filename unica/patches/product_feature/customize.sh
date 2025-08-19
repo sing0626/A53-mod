@@ -140,9 +140,17 @@ if [[ "$(GET_FP_SENSOR_TYPE "$SOURCE_FP_SENSOR_CONFIG")" != "$(GET_FP_SENSOR_TYP
 fi
 
 if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
-    LOG_STEP_IN "- Applying Ultrasonic FOD Animation Patch"
-    APPLY_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/BiometricSetting.apk/0002-Always-use-ultrasonic-FOD-animation.patch"
-    LOG_STEP_OUT
+    LOG "- Adding Ultrasonic FOD Animation"
+
+    DECODE_APK "system" "system/priv-app/BiometricSetting/BiometricSetting.apk"
+
+    FTP="
+    system/priv-app/BiometricSetting/BiometricSetting.apk/smali/com/samsung/android/biometrics/app/setting/fingerprint/vi/VisualEffectContainer.smali
+    "
+    for f in $FTP; do
+        sed -i "s/green_circle/ripple/g" "$APKTOOL_DIR/$f"
+        sed -i "s/white_circle/ripple/g" "$APKTOOL_DIR/$f"
+    done
 fi
 
 #if [[ "$TARGET_API_LEVEL" -lt 34 ]]; then
