@@ -8,8 +8,7 @@ GET_FP_SENSOR_TYPE()
     elif [[ "$1" == *"side"* ]]; then
         echo "side"
     else
-        echo "Unsupported type: $1"
-        exit 1
+        ABORT "Unsupported type: $1"
     fi
 }
 # ]
@@ -50,19 +49,6 @@ else
     fi
 fi
 
-#if $SOURCE_AUDIO_SUPPORT_DUAL_SPEAKER; then
-#    if ! $TARGET_AUDIO_SUPPORT_DUAL_SPEAKER; then
-#        echo "Applying dual speaker patches"
-#        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/audio/dual_speaker/framework.jar/0001-Disable-dual-speaker-support.patch"
-#        APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/audio/dual_speaker/services.jar/0001-Disable-dual-speaker-support.patch"
-#    fi
-#else
-#    if $TARGET_AUDIO_SUPPORT_DUAL_SPEAKER; then
-#        # TODO: won't be necessary anyway
-#        true
-#    fi
-#fi
-
 if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
     if ! $TARGET_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
     LOG_STEP_IN "- Applying virtual vibration patches"
@@ -71,11 +57,6 @@ if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/audio/virtual_vib/SecSettings.apk/0001-Disable-virtual-vibration-support.patch"
         APPLY_PATCH "system" "system/priv-app/SettingsProvider/SettingsProvider.apk" "$SRC_DIR/unica/patches/product_feature/audio/virtual_vib/SettingsProvider.apk/0001-Disable-virtual-vibration-support.patch"
     LOG_STEP_OUT
-    fi
-else
-    if $TARGET_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
-        # TODO: won't be necessary anyway
-        true
     fi
 fi
 
@@ -115,27 +96,8 @@ if [[ "$(GET_FP_SENSOR_TYPE "$SOURCE_FP_SENSOR_CONFIG")" != "$(GET_FP_SENSOR_TYP
 
     grep -lr "$SOURCE_FP_SENSOR_CONFIG" "$APKTOOL_DIR/system/framework/framework.jar/" | xargs -r -n 1 sed -i "s/$SOURCE_FP_SENSOR_CONFIG/$TARGET_FP_SENSOR_CONFIG/g"
 
-    # TODO: handle ultrasonic devices
-    if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
-        ADD_TO_WORK_DIR "gts9xxx" "system" "." 0 0 755 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "r11sxxx" "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" 0 0 644 "u:object_r:system_file:s0"
-        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/SecSettings.apk/0001-Enable-isOpticalSensor.patch"
-        APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/SystemUI.apk/0001-Add-optical-FOD-support.patch"
-    elif [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "side" ]]; then
-        ADD_TO_WORK_DIR "b5qxxx" "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" 0 0 644 "u:object_r:system_file:s0"
-        #APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/fingerprint/services.jar/0001-Disable-SECURITY_FINGERPRINT_IN_DISPLAY.patch"
-        #APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/SecSettings.apk/0001-Enable-isSideSensor.patch"
-        #APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" "$SRC_DIR/unica/patches/product_feature/fingerprint/SystemUI.apk/0001-Add-side-fingerprint-sensor-support.patch"
-    fi
+    # TODO: handle ultrasonic and side fp devices
 
-    #if [[ "$TARGET_FP_SENSOR_CONFIG" == *"navi=1"* ]]; then
-    #    APPLY_PATCH "system" "system/framework/services.jar" \
-    #        "$SRC_DIR/unica/patches/product_feature/fingerprint/services.jar/0001-Enable-FP_FEATURE_GESTURE_MODE.patch"
-    #fi
-    #if [[ "$TARGET_FP_SENSOR_CONFIG" == *"no_delay_in_screen_off"* ]]; then
-    #    APPLY_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" \
-    #        "$SRC_DIR/unica/patches/product_feature/fingerprint/BiometricSetting.apk/0001-Enable-FP_FEATURE_NO_DELAY_IN_SCREEN_OFF.patch"
-    #fi
     LOG_STEP_OUT
 fi
 
@@ -153,11 +115,6 @@ if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
     done
 fi
 
-#if [[ "$TARGET_API_LEVEL" -lt 34 ]]; then
-#    echo "Applying Face HIDL patches"
-#    APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/face/services.jar/0001-Fallback-to-Face-HIDL-2.0.patch"
-#fi
-
 if [[ "$SOURCE_MDNIE_SUPPORTED_MODES" != "$TARGET_MDNIE_SUPPORTED_MODES" ]] || \
     [[ "$SOURCE_MDNIE_WEAKNESS_SOLUTION_FUNCTION" != "$TARGET_MDNIE_WEAKNESS_SOLUTION_FUNCTION" ]]; then
     LOG_STEP_IN "- Applying mDNIe features patches"
@@ -173,34 +130,6 @@ if [[ "$SOURCE_MDNIE_SUPPORTED_MODES" != "$TARGET_MDNIE_SUPPORTED_MODES" ]] || \
     done
     LOG_STEP_OUT
 fi
-#if $SOURCE_HAS_HW_MDNIE; then
-#    if ! $TARGET_HAS_HW_MDNIE; then
-#        LOG_STEP_IN "- Applying HW mDNIe patches"
-#        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_LCD_SUPPORT_MDNIE_HW" --delete
-#        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/framework.jar/0001-Disable-HW-mDNIe.patch"
-#        APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/services.jar/0001-Disable-HW-mDNIe.patch"
-#        LOG_STEP_OUT
-#    fi
-#else
-#    if $TARGET_HAS_HW_MDNIE; then
-#        # TODO: add HW mDNIe support
-#        true
-#    fi
-#fi
-#if $SOURCE_MDNIE_SUPPORT_HDR_EFFECT; then
-#    if ! $TARGET_MDNIE_SUPPORT_HDR_EFFECT; then
-#        LOG_STEP_IN "- Applying mDNIe HDR effect patches"
-#        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_SUPPORT_HDR_EFFECT" --delete
-#        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hdr/SecSettings.apk/0001-Disable-HDR-Settings.patch"
-#        APPLY_PATCH "system" "system/priv-app/SettingsProvider/SettingsProvider.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hdr/SettingsProvider.apk/0001-Disable-HDR-Settings.patch"
-#        LOG_STEP_OUT
-#    fi
-#else
-#    if $TARGET_MDNIE_SUPPORT_HDR_EFFECT; then
-#        # TODO: won't be necessary anyway
-#        true
-#    fi
-#fi
 
 if ! $SOURCE_HAS_QHD_DISPLAY; then
     if $TARGET_HAS_QHD_DISPLAY; then
@@ -212,11 +141,6 @@ if ! $SOURCE_HAS_QHD_DISPLAY; then
         APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-dynamic-resolution-control.patch"
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/resolution/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
         LOG_STEP_OUT
-    fi
-else
-    if ! $TARGET_HAS_QHD_DISPLAY; then
-        # TODO: won't be necessary anyway
-        true
     fi
 fi
 
@@ -230,12 +154,6 @@ if [[ "$SOURCE_HFR_MODE" != "$TARGET_HFR_MODE" ]]; then
     DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
     DECODE_APK "system" "system/priv-app/SettingsProvider/SettingsProvider.apk"
     DECODE_APK "system_ext" "priv-app/SystemUI/SystemUI.apk"
-
-    # TODO: this breaks 60hz AOD
-    #if [[ "${#TARGET_HFR_MODE}" -le "6" ]]; then
- #   if [[ "$TARGET_HFR_MODE" -le "1" ]]; then
- #       APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" "$SRC_DIR/unica/patches/product_feature/hfr/SystemUI.apk/0001-Nuke-KEYGUARD_ADJUST_REFRESH_RATE.patch"
- #   fi
 
     FTP="
     system/framework/framework.jar/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali
@@ -254,6 +172,7 @@ if [[ "$SOURCE_HFR_MODE" != "$TARGET_HFR_MODE" ]]; then
     done
     LOG_STEP_OUT
 fi
+
 if [[ "$SOURCE_HFR_SUPPORTED_REFRESH_RATE" != "$TARGET_HFR_SUPPORTED_REFRESH_RATE" ]]; then
     LOG_STEP_IN "- Applying HFR_SUPPORTED_REFRESH_RATE patches"
 
@@ -273,6 +192,7 @@ if [[ "$SOURCE_HFR_SUPPORTED_REFRESH_RATE" != "$TARGET_HFR_SUPPORTED_REFRESH_RAT
     done
     LOG_STEP_OUT
 fi
+
 if [[ "$SOURCE_HFR_DEFAULT_REFRESH_RATE" != "$TARGET_HFR_DEFAULT_REFRESH_RATE" ]]; then
     LOG_STEP_IN "- Applying HFR_DEFAULT_REFRESH_RATE patches"
 
@@ -290,25 +210,6 @@ if [[ "$SOURCE_HFR_DEFAULT_REFRESH_RATE" != "$TARGET_HFR_DEFAULT_REFRESH_RATE" ]
     done
     LOG_STEP_OUT
 fi
-#if [[ "$SOURCE_HFR_SEAMLESS_BRT" != "$TARGET_HFR_SEAMLESS_BRT" ]] || \
-#    [[ "$SOURCE_HFR_SEAMLESS_LUX" != "$TARGET_HFR_SEAMLESS_LUX" ]]; then
-#    LOG_STEP_IN "- Applying HFR_SEAMLESS_BRT/HFR_SEAMLESS_LUX patches"
-#
-#    if [[ "$TARGET_HFR_SEAMLESS_BRT" == "none" ]] && [[ "$TARGET_HFR_SEAMLESS_LUX" == "none" ]]; then
-#        #APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/hfr/framework.jar/0001-Remove-brightness-threshold-values.patch"
-#    else
-#        DECODE_APK "system" "system/framework/framework.jar"
-#
-#        FTP="
-#        system/framework/framework.jar/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali
-#        "
-#        for f in $FTP; do
-#            sed -i "s/\"$SOURCE_HFR_SEAMLESS_BRT\"/\"$TARGET_HFR_SEAMLESS_BRT\"/g" "$APKTOOL_DIR/$f"
-#            sed -i "s/\"$SOURCE_HFR_SEAMLESS_LUX\"/\"$TARGET_HFR_SEAMLESS_LUX\"/g" "$APKTOOL_DIR/$f"
-#        done
-#    fi
-#    LOG_STEP_OUT
-#fi
 
 if [[ "$SOURCE_MULTI_MIC_MANAGER_VERSION" != "$TARGET_MULTI_MIC_MANAGER_VERSION" ]]; then
     LOG_STEP_IN "- Applying SemMultiMicManager patches"
