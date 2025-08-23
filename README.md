@@ -1,5 +1,5 @@
 # Why?
-Since UN1CA is away for a while why not make something like this.
+Since UN1CA is archived (R.I.P.) why not make something like this.
 
 # Features
 - Based on the latest stable Galaxy A53 firmware
