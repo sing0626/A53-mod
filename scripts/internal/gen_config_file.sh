@@ -142,15 +142,6 @@ fi
 #     String containing the path to the target device folder containing its block devices.
 #     Defaults to "/dev/block/bootdevice/by-name".
 #
-#   TARGET_DISABLE_AVB_SIGNING
-#     If set to true, AVB signing will be disabled.
-#     Defaults to false.
-#
-#   TARGET_INCLUDE_PATCHED_VBMETA (DEPRECATED)
-#     If set to true, a patched vbmeta image will be included in the compiled Odin tar package.
-#     Only applies when TARGET_INSTALL_METHOD is set to "odin".
-#     Defaults to false.
-#
 #   TARGET_KEEP_ORIGINAL_SIGN
 #     If set to true, the original AVB/Samsung signature footer is kept in the target device kernel images.
 #     Defaults to false.
@@ -212,21 +203,6 @@ fi
 #     String containing the DVFS config file name used by SDHMS.
 #     It can be checked in the following ways:
 #       - `DVFS_FILENAME` value in the `com.android.server.ssrm.Feature` class inside `ssrm.jar`
-#
-#   [SOURCE/TARGET]_ESE_CHIP_VENDOR
-#     String containing the device eSE chip vendor.
-#     Defaults to "none".
-#     It can be checked in the following ways:
-#       - `chipVendor` value in the `com.android.server.SemService` class inside `framework.jar`
-#       - `chipVendor` value in the `com.android.se.internal.UtilExtension` class inside `SecureElement.apk`
-#
-#   [SOURCE/TARGET]_ESE_COS_NAME
-#     String containing the device eSE COS name.
-#     Defaults to "none".
-#     It can be checked in the following ways:
-#       - `cosName` value in the `com.android.server.SemService` class inside `framework.jar`
-#       - `cosName` value in the `com.samsung.android.service.SemService` class inside `framework.jar`
-#       - `mEseCosName` value in the `com.android.se.internal.UtilExtension` class inside `SecureElement.apk`
 #
 #   [SOURCE/TARGET]_FP_SENSOR_CONFIG
 #     String containing the fingerprint sensor feature string.
@@ -352,7 +328,6 @@ fi
     GET_BUILD_VAR "TARGET_OS_FILE_SYSTEM"
     GET_BUILD_VAR "TARGET_FS_CHANGED" "false"
     GET_BUILD_VAR "TARGET_BOOT_DEVICE_PATH" "/dev/block/bootdevice/by-name"
-    GET_BUILD_VAR "TARGET_INCLUDE_PATCHED_VBMETA" "false"
     GET_BUILD_VAR "TARGET_KEEP_ORIGINAL_SIGN" "false"
     GET_BUILD_VAR "TARGET_BOOT_PARTITION_SIZE" "none"
     GET_BUILD_VAR "TARGET_DTBO_PARTITION_SIZE" "none"
@@ -374,10 +349,6 @@ fi
     GET_BUILD_VAR "TARGET_AUTO_BRIGHTNESS_TYPE"
     GET_BUILD_VAR "SOURCE_DVFS_CONFIG_NAME"
     GET_BUILD_VAR "TARGET_DVFS_CONFIG_NAME"
-    GET_BUILD_VAR "SOURCE_ESE_CHIP_VENDOR" "none"
-    GET_BUILD_VAR "TARGET_ESE_CHIP_VENDOR" "none"
-    GET_BUILD_VAR "SOURCE_ESE_COS_NAME" "none"
-    GET_BUILD_VAR "TARGET_ESE_COS_NAME" "none"
     GET_BUILD_VAR "SOURCE_FP_SENSOR_CONFIG"
     GET_BUILD_VAR "TARGET_FP_SENSOR_CONFIG"
     GET_BUILD_VAR "SOURCE_HAS_HW_MDNIE"
