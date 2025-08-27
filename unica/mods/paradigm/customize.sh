@@ -15,15 +15,6 @@ LOG_STEP_OUT
 LOG_STEP_IN "- Adding Galaxy AI features"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_DISABLE_NATIVE_AI" --delete
 
-LOG_STEP_IN "- Adding Now Brief"
-ADD_TO_WORK_DIR "pa1qxx" "system" "system/priv-app/SamsungSmartSuggestions/SamsungSmartSuggestions.apk" 0 0 644 "u:object_r:system_file:s0"
-ADD_TO_WORK_DIR "pa1qxx" "system" \
-    "system/etc/default-permissions/default-permissions-com.samsung.android.app.moments.xml" 0 0 644 "u:object_r:system_file:s0"
-ADD_TO_WORK_DIR "pa1qxx" "system" "system/priv-app/Moments/Moments.apk" 0 0 644 "u:object_r:system_file:s0"
-SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION" "20251"
-SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_SUPPORT_PERSONALIZED_DATA_CORE" "TRUE"
-LOG_STEP_OUT
-
 LOG_STEP_IN "- Adding Photo Editor"
 DELETE_FROM_WORK_DIR "system" "system/priv-app/PhotoEditor_Full"
 ADD_TO_WORK_DIR "dm1qxx" "system" "system/priv-app/PhotoEditorAI_Full/PhotoEditorAI_Full.apk" 0 0 644 "u:object_r:system_file:s0"
