@@ -28,7 +28,7 @@ if [[ "$SOURCE_SUPPORT_CUTOUT_PROTECTION" != "$TARGET_SUPPORT_CUTOUT_PROTECTION"
 fi
 
 # Set custom Display ID prop
-SET_PROP "system" "ro.build.display.id" "$(GET_PROP "system" "ro.build.display.id")-Ksawlii"
+SET_PROP "system" "ro.build.display.id" "$(GET_PROP "system" "ro.build.display.id")-Majaahh"
 
 # https://github.com/crok/crokrammgmtfix/blob/master/service.sh#L27-L32
 LOG_STEP_IN "- Applying Crok's RAM Managment Fix"
