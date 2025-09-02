@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [a53x]
+        target: [why_are_you_looking_here?]
 
     steps:
       - name: Checkout repo

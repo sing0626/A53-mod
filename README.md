@@ -1,21 +1,5 @@
-# Why?
-Since UN1CA is archived (R.I.P.) why not make something like this.
-
-# Features
-- Based on the latest stable Galaxy A53 firmware
-- Galaxy AI support
-- High end animations
-- AOD clock transition support
-- Picture remaster support
-- Object, shadow and reflection eraser support
-- Image clipper support
-- Smart Suggestions widget
-- Multi user support
-- Camera privacy toggle support
-- Debloated from useless system services/additional apps
-- [BluetoothLibraryPatcher](https://github.com/3arthur6/BluetoothLibraryPatcher) included
-- [FrameworkPatch](https://github.com/chiteroman/FrameworkPatch) implemented in system frameworks
-- [KnoxPatch](https://github.com/salvogiangri/KnoxPatch) implemented in system frameworks
+# EOL
+It was nice while it lasted
 
 # Licensing
 This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE). External dependencies might be distributed under a different license, such as:
